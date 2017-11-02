@@ -4,7 +4,7 @@ fos_js_routing:
 
 fos_user:
   resource: "@FOSUserBundle/Resources/config/routing/all.xml"
-  prefix: /
+  prefix: account/
 
 #used when referencing the routing.yml in the src folder as external routing
 product_default:
