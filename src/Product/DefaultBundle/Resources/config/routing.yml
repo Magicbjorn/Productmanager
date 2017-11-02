@@ -1,3 +1,25 @@
-product_default_homepage:
-    path:     /
-    defaults: { _controller: ProductDefaultBundle:Default:index }
+#used when referencing this file as external routing
+product_index:
+    path: /
+    methods: GET
+    defaults: { _controller: ProductDefaultBundle:Product:index }
+
+product_new:
+    path: products/new
+    methods: [ GET, POST ]
+    defaults: { _controller: ProductDefaultBundle:Product:new }
+
+product_show:
+    path: products/{id}
+    methods: GET
+    defaults: { _controller: ProductDefaultBundle:Product:show }
+
+product_edit:
+    path: products/{id}/edit
+    methods: [ GET, POST, DELETE ]
+    defaults: { _controller: ProductDefaultBundle:Product:edit }
+
+product_delete:
+    path: products/{id}
+    methods: DELETE
+    defaults: { _controller: ProductDefaultBundle:Product:delete }
