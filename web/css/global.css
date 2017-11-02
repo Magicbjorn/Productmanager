@@ -37,6 +37,10 @@ tr:nth-child(even) {
     margin-right: 60px;
 }
 
+#loginRegisterGroup {
+    min-width: 300px;
+}
+
 .left-addon .glyphicon {
     left: 0px;
 }

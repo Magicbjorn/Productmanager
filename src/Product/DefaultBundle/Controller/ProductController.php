@@ -4,8 +4,6 @@ namespace Product\DefaultBundle\Controller;
 
 use Product\DefaultBundle\Entity\Product;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
 
 class ProductController extends Controller
@@ -43,11 +41,15 @@ class ProductController extends Controller
             $noproducts = true;
         }
 
+        $formFactory = $this->container->get('fos_user.registration.form.factory');
+        $form = $formFactory->createForm();
+
         return $this->render('ProductDefaultBundle:Product:index.html.twig', array(
             'products'        => $result,
             'showClearFilter' => $this->showClearFilter,
             'filter'          => $filter,
             'noproducts'      => $noproducts,
+            'form'            => $form->createView(),
         ));
     }
 

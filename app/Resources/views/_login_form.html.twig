@@ -29,12 +29,11 @@
         </div>
         <div class="loginregisterformpadding" id="hiddenregister" style="display: none;">
             <form action="{{ path('fos_user_registration_register') }}" id="frmRegister" method="post">
-                <input class="form-control" placeholder="E-mail" id="fos_user_registration_form_email" name="fos_user_registration_form[email]" required="required" type="email"/>
-                <input class="form-control" placeholder="Username" id="fos_user_registration_form_username" maxlength="180" name="fos_user_registration_form[username]" pattern=".{2,}" required="required" type="text"/>
-                <input class="form-control" placeholder="Password" id="fos_user_registration_form_plainPassword_first" name="fos_user_registration_form[plainPassword][first]" required="required" type="password"/>
-                <input class="form-control" placeholder="password Repeat" id="fos_user_registration_form_plainPassword_second" name="fos_user_registration_form[plainPassword][second]" required="required" type="password"/>
-                {{ form_widget(form._token) }}
-                <input class="form-control btn btn-primary" type="submit" value="Register">
+                <input class="form-control" name="form.email" placeholder="E-mail" required="required" type="text"/>
+                <input class="form-control" name="form.username" placeholder="Username" required="required" type="text"/>
+                <input class="form-control" name="form.password" placeholder="Password" required="required" type="password"/>
+                <input class="form-control" name="form.password.second" placeholder="Password confirmation" required="required" type="password"/>
+                <input class="form-control btn btn-primary" id="_submit" name="_submit" type="submit" value="Log In">
                 </input>
                 <h5>
                     Already an account?
