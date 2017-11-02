@@ -1,43 +1,100 @@
-{% extends 'base.html.twig' %}
+{% extends 'ProductDefaultBundle:Product:_layout.html.twig' %}
 
-{% block body %}
-    <h1>Products list</h1>
-
+{% block bodycontent %}
+<h2 class="title-align-horizontal">
+    Products list
+</h2>
+<div class="row button-align-horizontal">
+    <a class="btn btn-primary btn-primary-modified" href="{{ path('product_new') }}" style="margin-bottom: 5px;">
+        Create a new product
+    </a>
+</div>
+<div>
+    <form action="{{ path('product_index') }}" class="form-align-horizontal" id="frmSearch" method="get">
+        <div class="input-group margin-input-group">
+            <input class="form-control" id="searchinput" name="filter" placeholder="Search for..." type="search">
+                <span class="glyphicon glyphicon-remove-circle" id="searchclear">
+                </span>
+                <span class="input-group-btn">
+                    <button class="btn btn-secondary btn-secondary-modified" type="submit">
+                        Go!
+                    </button>
+                </span>
+            </input>
+        </div>
+    </form>
+</div>
+{% if showClearFilter %}
+<div class="row button-align-horizontal" style="margin-bottom: 5px;">
+    <h5 style="float: left; margin-right: 15px">
+        Searching for: {{filter}}
+    </h5>
+    <a class="btn btn-secondary btn-secondary-modified" href="{{ path('product_index') }}" type="submit">
+        x Clear Filter
+    </a>
+</div>
+{% endif %}
+<div class="row">
+    {% if noproducts %}
+    <h1 class="title-text">
+        Nobody, but us chickens
+    </h1>
+    <h1 class="title-text">
+        :(
+    </h1>
+    {% else %}
     <table>
         <thead>
             <tr>
-                <th>Id</th>
-                <th>Title</th>
-                <th>Description</th>
-                <th>Price</th>
-                <th>Actions</th>
+                <th>
+                    {{ knp_pagination_sortable(products, 'Id', 'prods.id') }}
+                </th>
+                <th>
+                    {{ knp_pagination_sortable(products, 'Title', 'prods.title') }}
+                </th>
+                <th>
+                    {{ knp_pagination_sortable(products, 'Price', 'prods.price') }}
+                </th>
+                <th>
+                    {{ knp_pagination_sortable(products, 'Description', 'prods.description') }}
+                </th>
+                <th style="width: 200px">
+                    Actions
+                </th>
             </tr>
         </thead>
         <tbody>
-        {% for product in products %}
+            {% for product in products %}
             <tr>
-                <td><a href="{{ path('product_show', { 'id': product.id }) }}">{{ product.id }}</a></td>
-                <td>{{ product.title }}</td>
-                <td>{{ product.description }}</td>
-                <td>{{ product.price }}</td>
                 <td>
-                    <ul>
-                        <li>
-                            <a href="{{ path('product_show', { 'id': product.id }) }}">show</a>
-                        </li>
-                        <li>
-                            <a href="{{ path('product_edit', { 'id': product.id }) }}">edit</a>
-                        </li>
-                    </ul>
+                    <a href="{{ path('product_show', { 'id': product.id }) }}">
+                        {{ product.id }}
+                    </a>
+                </td>
+                <td>
+                    {{ product.title }}
+                </td>
+                <td>
+                    {{ product.price }}
+                </td>
+                <td>
+                    {{ product.description }}
+                </td>
+                <td>
+                    <a class="btn btn-primary btn-primary-modified btn-margin" href="{{ path('product_show', { 'id': product.id }) }}">
+                        show
+                    </a>
+                    <a class="btn btn-primary btn-primary-modified btn-margin" href="{{ path('product_edit', { 'id': product.id }) }}">
+                        edit
+                    </a>
                 </td>
             </tr>
-        {% endfor %}
+            {% endfor %}
         </tbody>
     </table>
-
-    <ul>
-        <li>
-            <a href="{{ path('product_new') }}">Create a new product</a>
-        </li>
-    </ul>
+    {% endif %}
+</div>
+<div class="navigation text-center">
+    {{ knp_pagination_render(products) }}
+</div>
 {% endblock %}

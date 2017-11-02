@@ -1,0 +1,30 @@
+<div class="loginregisterform">
+    {% if is_granted('ROLE_USER') %}
+    <h5 class="user-text">
+        Welcome
+        <i>
+            {{ app.user.username }}
+        </i>
+    </h5>
+    <form action="{{ path('fos_user_security_logout') }}">
+        <input class="btn btn-primary loginregisterbuttons" id="btnLogout" type="submit" value="Logout"/>
+    </form>
+    {% else %}
+    <input class="btn btn-default loginregisterbuttons" id="btnShowLogin" type="submit" value="Login/Register"/>
+    <div id="hiddenlogin" style="display: none;">
+        <form action="{{ path('fos_user_security_check') }}" id="frmLogin" method="post">
+            <input class="form-control" id="username" name="_username" placeholder="Username" required="required" type="text"/>
+            <input class="form-control" id="password" name="_password" placeholder="Password" required="required" type="password"/>
+            <input name="_csrf_token" type="hidden" value="{{ fos_csrf_provider.refreshToken('authenticate') }}"/>
+            <input class="form-control btn btn-primary" id="_submit" name="_submit" type="submit" value="Log In">
+            </input>
+            <h5>
+                No account yet?
+                <a href="{{ path('fos_user_registration_register') }}">
+                    Register here.
+                </a>
+            </h5>
+        </form>
+    </div>
+    {% endif %}
+</div>

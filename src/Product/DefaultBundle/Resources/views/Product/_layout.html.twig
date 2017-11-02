@@ -1,0 +1,52 @@
+{% extends 'base.html.twig' %}
+{% block title %}Productmanagement{% endblock %}
+{% block stylesheets %}
+<link href="{{ asset('vendor/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet"/>
+<link href="{{ asset('css/global.css') }}" rel="stylesheet"/>
+<link href="{{ asset('css/layout.css') }}" rel="stylesheet"/>
+<link href="{{ asset('vendor/fontawesome/css/font-awesome.min.css') }}" rel="stylesheet"/>
+{% endblock %}
+{% block body %}
+<div class="search-bar">
+    <form action="" class="js-sea-search sea-search" method="GET">
+        <input autocomplete="off" class="search-input" name="q" placeholder="Search Sea Creatures" type="search">
+        </input>
+    </form>
+</div>
+<header class="header">
+    <!-- <img class="logo-icon" src="{{ asset('images/aquanote-logo.png') }}"> -->
+    <h1 class="logo">
+        Productmanagement
+    </h1>
+    <ul class="navi">
+        {% block login %}
+            {{ include('ProductDefaultBundle:Product:_login_form.html.twig') }}
+        {% endblock %}
+    </ul>
+</header>
+<div class="main-content">
+    {% for msg in app.session.flashBag.get('success') %}
+    <div class="alert alert-success">
+        {{ msg }}
+    </div>
+    {% endfor %}
+    {% block bodycontent %}{% endblock %}
+</div>
+<div class="footer">
+    <p class="footer-text">
+        Made with
+        <span class="heart">
+            <3
+        </span>
+        <a href="https://knpuniversity.com">
+            KnpUniversity
+        </a>
+    </p>
+</div>
+{% endblock %}
+{% block javascripts %}
+<script src="//code.jquery.com/jquery-2.1.4.min.js">
+</script>
+<script src="{{ asset('js/main.js') }}">
+</script>
+{% endblock %}
