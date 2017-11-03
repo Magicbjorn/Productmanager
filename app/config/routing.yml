@@ -1,3 +1,10 @@
+#used when referencing the routing.yml in the src folder as external routing
+pc_build_main:
+    resource: "@PCBuildMainBundle/Resources/config/routing.yml"
+    prefix:   /
+    options:
+      expose: true
+
 # app/config/routing.yml
 fos_js_routing:
   resource: "@FOSJsRoutingBundle/Resources/config/routing/routing.xml"
@@ -6,14 +13,7 @@ fos_user:
   resource: "@FOSUserBundle/Resources/config/routing/all.xml"
   prefix: /
 
-#used when referencing the routing.yml in the src folder as external routing
-product_default:
-  resource: "@ProductDefaultBundle/Resources/config/routing.yml"
-  prefix: /
-  options:
-    expose: true
-
 #used when routing is handled by the controller itself
 # app:
-#   resource: "@ProductDefaultBundle/Controller/"
+#   resource: "@PCBuildbundle/Controller/"
 #   type: annotation

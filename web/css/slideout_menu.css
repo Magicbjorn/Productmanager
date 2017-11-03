@@ -1,0 +1,74 @@
+/* The "left-menu" classes are used for each individual item link in the slideout menu. */
+
+.sidemenubutton {
+  position: fixed;
+  left: 20px;
+  top: 3px;
+}
+
+.menubar {
+  height: 50px;
+}
+
+.left-menu {
+  position: fixed;
+  width: 100%;
+  height: 50px;
+  background-color: #333;
+  top: 0px;
+  z-index: 10000;
+}
+
+.left-menu a {
+  color: #fff;
+  font-size: 2.0em;
+  font-weight: 100;
+  text-decoration: none;
+}
+
+.left-menu a:visited {
+  text-decoration: none;
+}
+
+.left-menu a:hover {
+  text-decoration: none;
+}
+
+.left-menu a:active {
+  text-decoration: none;
+}
+
+/* The following classes are used to style the slide-out menu. */
+.slideout-menu {
+  padding-left: 15px;
+  padding-right: 15px;
+  overflow-y: auto;
+}
+.slideout-menu h3 {
+  position: relative;
+  margin-bottom: 5px; 
+  color: #000;
+  font-size: 1.2em;
+  font-weight: 400;
+  /*border-bottom: 4px solid #222;*/
+}
+.slideout-menu h4 {
+  color: #333;
+  font-size: 1.0em;
+  font-weight: 400;
+  padding: 0px 0px 0px 10px; 
+}
+.slideout-menu ul {
+  list-style: none;
+  font-weight: 300;
+  margin-bottom: 15px;
+  margin-top: 5px;
+  padding: 0px 0px 0px 0px; 
+}
+.slideout-menu ul li {
+  line-height: 2.0em;
+}
+.slideout-menu ul li a:hover {
+  color: #fff;
+  text-decoration: underline;
+}

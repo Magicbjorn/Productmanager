@@ -1,6 +1,6 @@
 <?php
 
-namespace Product\DefaultBundle\EventListener;
+namespace PCBuild\MainBundle\EventListener;
 
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -18,7 +18,7 @@ class RedirectAfterRegistrationSubscriber implements EventSubscriberInterface
 
     public function onRegistrationSuccess($event)
     {
-        $url = $this->router->generate('product_index');
+        $url = $this->router->generate('build_index');
         $response = new RedirectResponse($url);
         $event->setResponse($response);
     }

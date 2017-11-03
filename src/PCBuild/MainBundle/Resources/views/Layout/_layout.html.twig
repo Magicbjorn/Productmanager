@@ -1,25 +1,21 @@
 {% extends 'base.html.twig' %}
-{% block title %}Productmanagement{% endblock %}
+{% block title %}PCBuilder Xtreme{% endblock %}
 {% block stylesheets %}
 <link href="{{ asset('vendor/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet"/>
+<link href="{{ asset('css/_hamburger.css') }}" rel="stylesheet"/>
 <link href="{{ asset('css/global.css') }}" rel="stylesheet"/>
 <link href="{{ asset('css/layout.css') }}" rel="stylesheet"/>
 <link href="{{ asset('vendor/fontawesome/css/font-awesome.min.css') }}" rel="stylesheet"/>
 {% endblock %}
 {% block body %}
-<div class="search-bar">
-    <form action="" class="js-sea-search sea-search" method="GET">
-        <input autocomplete="off" class="search-input" name="q" placeholder="Search Sea Creatures" type="search">
-        </input>
-    </form>
-</div>
 <header class="header">
+    {{ include('PCBuildMainBundle:Layout:_hamburger.html.twig') }}
     <h1 class="logo">
-        Productmanagement
+        PCBuilder Xtreme
     </h1>
     <ul class="navi">
         {% block login %}
-            {{ include('ProductDefaultBundle:Layout:_login_form.html.twig') }}
+            {{ include('PCBuildMainBundle:Layout:_login_form.html.twig') }}
         {% endblock %}
     </ul>
 </header>

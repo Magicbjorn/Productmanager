@@ -1,0 +1,98 @@
+{% extends 'PCBuildMainBundle:Layout:_layout.html.twig' %}
+
+{% block bodycontent %}
+<h2 class="title-align-horizontal">
+    Your Builds
+</h2>
+<div class="row button-align-horizontal">
+    <a class="btn btn-primary btn-primary-modified" href="{{ path('build_new') }}" style="margin-bottom: 5px;">
+        Create a new build
+    </a>
+</div>
+<div>
+    <form action="{{ path('build_index') }}" class="form-align-horizontal" id="frmSearch" method="get">
+        <div class="input-group margin-input-group">
+            <input class="form-control" id="searchinput" name="filter" placeholder="Search for..." type="search">
+                <span class="glyphicon glyphicon-remove-circle" id="searchclear">
+                </span>
+                <span class="input-group-btn">
+                    <button class="btn btn-secondary btn-secondary-modified" type="submit">
+                        Go!
+                    </button>
+                </span>
+            </input>
+        </div>
+    </form>
+</div>
+{% if showClearFilter %}
+<div class="row button-align-horizontal" style="margin-bottom: 5px;">
+    <h5 style="float: left; margin-right: 15px">
+        Searching for: {{filter}}
+    </h5>
+    <a class="btn btn-secondary btn-secondary-modified" href="{{ path('build_index') }}" type="submit">
+        x Clear Filter
+    </a>
+</div>
+{% endif %}
+<div class="row">
+    {% if nobuilds %}
+    <h1 class="title-text">
+        Nobody, but us chickens
+    </h1>
+    <h1 class="title-text">
+        :(
+    </h1>
+    {% else %}
+    <table>
+        <thead>
+            <tr>
+                <th>
+                    {{ knp_pagination_sortable(builds, 'Title', 'builds.title') }}
+                </th>
+                <th>
+                    {{ knp_pagination_sortable(builds, 'Price', 'builds.price') }}
+                </th>
+                <th>
+                    {{ knp_pagination_sortable(builds, 'Description', 'builds.description') }}
+                </th>
+                <th>
+                    {{ knp_pagination_sortable(builds, 'Created At', 'builds.created_at') }}
+                </th>
+                <th style="width: 200px">
+                    Actions
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for build in builds %}
+            <tr>
+                <td>
+                    {{ build.title }}
+                </td>
+                <td>
+                    {{ build.price }}
+                </td>
+                <td>
+                    {{ build.description }}
+                </td>
+                <td>
+                    {{ build.created_at|date('d-m-Y H:i:s') }}
+                </td>
+                <td>
+                    <a class="btn btn-primary btn-primary-modified btn-margin" href="{{ path('build_show', { 'id': build.id }) }}">
+                        show
+                    </a>
+                    <a class="btn btn-primary btn-primary-modified btn-margin" href="{{ path('build_edit', { 'id': build.id }) }}">
+                        edit
+                    </a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% endif %}
+</div>
+<div class="navigation text-center">
+    {{ knp_pagination_render(builds) }}
+</div>
+{% endblock %}

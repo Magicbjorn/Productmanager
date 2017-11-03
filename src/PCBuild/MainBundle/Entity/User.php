@@ -1,7 +1,7 @@
 <?php
 
 // src/Product/DefaultBundle/Entity/User.php
-namespace Product\DefaultBundle\Entity;
+namespace PCBuild\MainBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use FOS\UserBundle\Model\User as BaseUser;

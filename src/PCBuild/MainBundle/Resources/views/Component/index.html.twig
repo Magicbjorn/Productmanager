@@ -1,0 +1,43 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Components list</h1>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Title</th>
+                <th>Description</th>
+                <th>Createdat</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for component in components %}
+            <tr>
+                <td><a href="{{ path('component_show', { 'id': component.id }) }}">{{ component.id }}</a></td>
+                <td>{{ component.title }}</td>
+                <td>{{ component.description }}</td>
+                <td>{% if component.createdat %}{{ component.createdat|date('Y-m-d H:i:s') }}{% endif %}</td>
+                <td>
+                    <ul>
+                        <li>
+                            <a href="{{ path('component_show', { 'id': component.id }) }}">show</a>
+                        </li>
+                        <li>
+                            <a href="{{ path('component_edit', { 'id': component.id }) }}">edit</a>
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('component_new') }}">Create a new component</a>
+        </li>
+    </ul>
+{% endblock %}

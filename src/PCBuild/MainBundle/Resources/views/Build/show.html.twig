@@ -1,0 +1,61 @@
+{% extends 'PCBuildMainBundle:Layout:_layout.html.twig' %}
+
+{% block bodycontent %}
+<h1 class="title-align-horizontal">
+    Product Details
+</h1>
+<a class="btn btn-primary btn-primary-modified btn-margin" href="{{ path('build_index') }}" style="position: fixed;">
+    < Back to the list
+</a>
+<div class="row">
+    <table>
+        <tbody>
+            <tr>
+                <th>
+                    Id
+                </th>
+                <td>
+                    {{ build.id }}
+                </td>
+            </tr>
+            <tr>
+                <th>
+                    Title
+                </th>
+                <td>
+                    {{ build.title }}
+                </td>
+            </tr>
+            <tr>
+                <th>
+                    Price
+                </th>
+                <td>
+                    {{ build.price }}
+                </td>
+            </tr>
+            <tr>
+                <th>
+                    Description
+                </th>
+                <td>
+                    {{ build.description }}
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <a class="btn btn-primary btn-primary-modified btn-margin" href="{{ path('build_edit', { 'id': build.id }) }}">
+                        Edit
+                    </a>
+                </td>
+                <td>
+                    {{ form_start(delete_form) }}
+                    <input class="btn btn-danger btn-danger-modified btn-margin" type="submit" value="Delete">
+                        {{ form_end(delete_form) }}
+                    </input>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+{% endblock %}

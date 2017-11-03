@@ -1,0 +1,4 @@
+services:
+#    pc_build_main.example:
+#        class: PCBuild\MainBundle\Example
+#        arguments: ["@service_id", "plain_value", "%parameter%"]

@@ -105,7 +105,7 @@ doctrine_migrations:
 fos_user:
     db_driver: orm
     firewall_name: main
-    user_class: Product\DefaultBundle\Entity\User
+    user_class: PCBuild\MainBundle\Entity\User
     from_email:
         address: "bj.broer@live.nl"
         sender_name: "Björn Broer"

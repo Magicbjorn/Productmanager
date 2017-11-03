@@ -20,7 +20,7 @@ class AppKernel extends Kernel
             new Doctrine\Bundle\MigrationsBundle\DoctrineMigrationsBundle(),
             new Knp\Bundle\PaginatorBundle\KnpPaginatorBundle(),
             new Sensio\Bundle\FrameworkExtraBundle\SensioFrameworkExtraBundle(),
-            new Product\DefaultBundle\ProductDefaultBundle(),
+            new PCBuild\MainBundle\PCBuildMainBundle(),
         ];
 
         if (in_array($this->getEnvironment(), ['dev', 'test'], true)) {

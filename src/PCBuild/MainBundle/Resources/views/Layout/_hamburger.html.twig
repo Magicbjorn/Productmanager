@@ -1,0 +1,151 @@
+<link href="{{ asset('css/slideout_menu.css') }}" rel="stylesheet"/>
+<div class="o-wrapper" id="o-wrapper">
+    <main class="o-content">
+        <div class="o-container">
+            <div class="c-buttons">
+                <img class="c-button hamburger" id="c-button--slide-left" src="/img/hamburger.png"/>
+            </div>
+        </div>
+    </main>
+</div>
+<nav class="c-menu c-menu--slide-left" id="c-menu--slide-left">
+    <button class="c-menu__close">
+        ← Close Menu
+    </button>
+    <div class="slideout-menu">
+        <h3 class="centertext">
+            Main Menu
+        </h3>
+        <ul>
+            <ul>
+                <li>
+                    <a class="centertext menuAText" href="{{ path('build_index') }}" id="other">
+                        Home
+                    </a>
+                </li>
+            </ul>
+            <h3 class="centertext">
+                Objects
+            </h3>
+            <ul>
+                <li>
+                    <a class="centertext menuAText" href="#" id="projects">
+                        Builds
+                    </a>
+                    <div class="panel-collapse collapse" id="projectsCollapsible">
+                        <h5 class="menuSubHeader">
+                            Management
+                        </h5>
+                        <hr class="menuLine"/>
+                        <ul>
+                            <li>
+                                <a class="centertext menuBText" href="{{ path('build_new') }}" id="other">
+                                    Create A New Build
+                                </a>
+                            </li>
+                            <li>
+                                <a class="centertext menuBText" href="{{ path('build_index') }}" id="other">
+                                    View Your Builds
+                                </a>
+                            </li>
+                        </ul>
+                        <h5 class="menuSubHeader">
+                            Find
+                        </h5>
+                        <hr class="menuLine"/>
+                        <ul>
+                            <li>
+                                <a class="centertext menuBText" href="#" id="other">
+                                    Search All Builds
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+                <li>
+                    <a class="centertext menuAText" href="#" id="quarantines">
+                        Components
+                    </a>
+                    <div class="panel-collapse collapse" id="quarantineCollapsible">
+                        <h5 class="menuSubHeader">
+                            Management
+                        </h5>
+                        <hr class="menuLine"/>
+                        <ul>
+                            <li>
+                                <a class="centertext menuBText" href="{{ path('component_new') }}" id="other">
+                                    Create A New Component
+                                </a>
+                            </li>
+                            <li>
+                                <a class="centertext menuBText" href="{{ path('component_index') }}" id="other">
+                                    View Your Components
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+            </ul>
+            <h3 class="centertext">
+                Other
+            </h3>
+            <ul>
+                <li>
+                    <a class="centertext menuAText" href="#" id="settings">
+                        Management
+                    </a>
+                    <div class="panel-collapse collapse" id="settingsCollapsible">
+                        <h5 class="menuSubHeader">
+                            Profile
+                        </h5>
+                        <hr class="menuLine"/>
+                        <ul>
+                            <li>
+                                <a class="centertext menuBText" href="#" id="other">
+                                    Manage Profile
+                                </a>
+                            </li>
+                        </ul>
+                        <h5 class="menuSubHeader">
+                            Settings
+                        </h5>
+                        <hr class="menuLine"/>
+                        <ul>
+                            <li>
+                                <a class="centertext menuBText" href="#" id="other">
+                                    Settings
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+            </ul>
+        </ul>
+    </div>
+</nav>
+<div class="c-mask" id="c-mask">
+</div>
+<!-- /c-mask -->
+<!-- menus script -->
+<script src="{{ asset('js/_hamburger.js') }}">
+</script>
+<script>
+    /**
+   * Slide left instantiation and action.
+   */
+  var slideLeft = new Menu({
+    wrapper: '#o-wrapper',
+    type: 'slide-left',
+    menuOpenerClass: '.c-button',
+    maskId: '#c-mask'
+  });
+
+  var slideLeftBtn = document.querySelector('#c-button--slide-left');
+  
+  slideLeftBtn.addEventListener('click', function(e) {
+    e.preventDefault;
+    slideLeft.open();
+  });
+
+  
+</script>

@@ -1,14 +1,16 @@
 <?php
 
-namespace Product\DefaultBundle\Controller;
+namespace PCBuild\MainBundle\Controller;
 
-use Product\DefaultBundle\Entity\Product;
+use PCBuild\MainBundle\Entity\Build;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 
-class ProductController extends Controller
+class BuildController extends Controller
 {
     private $showClearFilter = false;
+
+    private $username = null;
 
     public function CreateLoginForm()
     {
@@ -19,11 +21,20 @@ class ProductController extends Controller
 
     public function indexAction(Request $request)
     {
-        $filter     = null;
-        $noproducts = false;
+        $username = $this->get('security.token_storage')->getToken()->getUser();
+        
+        if ($username != "anon.") {
+            $username = $username->getUsername(0);
+        }
+
+        $filter   = null;
+        $nobuilds = false;
 
         $em           = $this->getDoctrine()->getManager();
-        $queryBuilder = $em->getRepository('ProductDefaultBundle:Product')->createQueryBuilder('builds');
+        $queryBuilder = $em->getRepository('PCBuildMainBundle:Build')->createQueryBuilder('builds');
+
+        $queryBuilder->where('builds.created_by = :created_by')
+            ->setParameter('created_by', $username);
 
         if ($request->query->getAlnum('filter')) {
             $filter                = $request->query->getAlnum('filter');
@@ -45,82 +56,91 @@ class ProductController extends Controller
         );
 
         if (count($result) <= 0) {
-            $noproducts = true;
+            $nobuilds = true;
         }
 
-        return $this->render('ProductDefaultBundle:Product:index.html.twig', array(
-            'products'                => $result,
+        return $this->render('PCBuildMainBundle:Build:index.html.twig', array(
+            'builds'                  => $result,
             'showClearFilter'         => $this->showClearFilter,
             'filter'                  => $filter,
-            'noproducts'              => $noproducts,
+            'nobuilds'                => $nobuilds,
             'login_registration_form' => $this->CreateLoginForm(),
         ));
     }
 
     public function newAction(Request $request)
     {
-        $product = new Product();
-        $form    = $this->createForm('Product\DefaultBundle\Form\ProductType', $product);
+        $build = new Build();
+        $form  = $this->createForm('PCBuild\MainBundle\Form\BuildType', $build);
         $form->handleRequest($request);
+
+        $build->setCreated_at(time());
+
+        $usr = $this->getUser();
+        $build->setCreated_by($usr->getUsername());
 
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
-            $em->persist($product);
+            $em->persist($build);
+
+            $build->setCreated_at = explode(" ", microtime())[1];
+            $build->setCreated_by = $this->username;
+
             $em->flush();
 
-            return $this->redirectToRoute('product_show', array('id' => $product->getId()));
+            return $this->redirectToRoute('build_show', array('id' => $build->getId()));
         }
 
-        return $this->render('ProductDefaultBundle:Product:new.html.twig', array(
-            'product'                 => $product,
+        return $this->render('PCBuildMainBundle:Build:new.html.twig', array(
+            'build'                   => $build,
             'form'                    => $form->createView(),
             'login_registration_form' => $this->CreateLoginForm(),
         ));
     }
 
-    public function showAction(Product $product)
+    public function showAction(Build $build)
     {
-        $deleteForm = $this->createDeleteForm($product);
+        $deleteForm = $this->createDeleteForm($build);
 
-        return $this->render('ProductDefaultBundle:Product:show.html.twig', array(
-            'product'                 => $product,
+        return $this->render('PCBuildMainBundle:Build:show.html.twig', array(
+            'build'                   => $build,
             'delete_form'             => $deleteForm->createView(),
             'login_registration_form' => $this->CreateLoginForm(),
         ));
     }
 
-    public function editAction(Request $request, Product $product)
+    public function editAction(Request $request, Build $build)
     {
-        $deleteForm = $this->createDeleteForm($product);
-        $editForm   = $this->createForm('Product\DefaultBundle\Form\ProductType', $product);
+        $deleteForm = $this->createDeleteForm($build);
+        $editForm   = $this->createForm('PCBuild\MainBundle\Form\BuildType', $build);
         $editForm->handleRequest($request);
 
         if ($editForm->isSubmitted() && $editForm->isValid()) {
             $this->getDoctrine()->getManager()->flush();
 
-            return $this->redirectToRoute('product_show', array('id' => $product->getId()));
+            return $this->redirectToRoute('build_show', array('id' => $build->getId()));
         }
 
-        return $this->render('ProductDefaultBundle:Product:edit.html.twig', array(
-            'product'                 => $product,
+        return $this->render('PCBuildMainBundle:Build:edit.html.twig', array(
+            'build'                   => $build,
             'edit_form'               => $editForm->createView(),
             'delete_form'             => $deleteForm->createView(),
             'login_registration_form' => $this->CreateLoginForm(),
         ));
     }
 
-    public function deleteAction(Request $request, Product $product)
+    public function deleteAction(Request $request, Build $build)
     {
-        $form = $this->createDeleteForm($product);
+        $form = $this->createDeleteForm($build);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
-            $em->remove($product);
+            $em->remove($build);
             $em->flush();
         }
 
-        return $this->redirectToRoute('product_index');
+        return $this->redirectToRoute('build_index');
     }
 
     /**
@@ -130,10 +150,10 @@ class ProductController extends Controller
      *
      * @return \Symfony\Component\Form\Form The form
      */
-    private function createDeleteForm(Product $product)
+    private function createDeleteForm(Build $build)
     {
         return $this->createFormBuilder()
-            ->setAction($this->generateUrl('product_delete', array('id' => $product->getId())))
+            ->setAction($this->generateUrl('build_delete', array('id' => $build->getId())))
             ->setMethod('DELETE')
             ->getForm()
         ;

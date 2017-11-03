@@ -8,7 +8,7 @@ use Doctrine\DBAL\Schema\Schema;
 /**
  * Auto-generated Migration: Please modify to your needs!
  */
-class Version20171102074842 extends AbstractMigration
+class Version20171103144919 extends AbstractMigration
 {
     /**
      * @param Schema $schema
@@ -18,7 +18,7 @@ class Version20171102074842 extends AbstractMigration
         // this up() migration is auto-generated, please modify it to your needs
         $this->abortIf($this->connection->getDatabasePlatform()->getName() !== 'mysql', 'Migration can only be executed safely on \'mysql\'.');
 
-        $this->addSql('ALTER TABLE product CHANGE title title VARCHAR(100) NOT NULL, CHANGE description description LONGTEXT NOT NULL, CHANGE price price NUMERIC(10, 2) NOT NULL');
+        $this->addSql('ALTER TABLE build ADD created_by VARCHAR(100) NOT NULL, CHANGE created created_at DATETIME NOT NULL');
     }
 
     /**
@@ -29,6 +29,6 @@ class Version20171102074842 extends AbstractMigration
         // this down() migration is auto-generated, please modify it to your needs
         $this->abortIf($this->connection->getDatabasePlatform()->getName() !== 'mysql', 'Migration can only be executed safely on \'mysql\'.');
 
-        $this->addSql('ALTER TABLE product CHANGE title title VARCHAR(255) NOT NULL COLLATE utf8mb4_unicode_ci, CHANGE price price VARCHAR(255) NOT NULL COLLATE utf8mb4_unicode_ci, CHANGE description description VARCHAR(255) NOT NULL COLLATE utf8mb4_unicode_ci');
+        $this->addSql('ALTER TABLE build DROP created_by, CHANGE created_at created DATETIME NOT NULL');
     }
 }

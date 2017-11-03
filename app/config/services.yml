@@ -15,7 +15,7 @@ services:
         public: false
 
     app.redirect_after_registration_subscriber:
-        class: Product\DefaultBundle\EventListener\RedirectAfterRegistrationSubscriber
+        class: PCBuild\MainBundle\EventListener\RedirectAfterRegistrationSubscriber
         autowire: true
         tags:
             - { name: kernel.event_subscriber }

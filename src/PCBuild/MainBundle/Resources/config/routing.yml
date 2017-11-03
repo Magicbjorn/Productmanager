@@ -1,0 +1,50 @@
+#used when referencing this file as external routing
+build_index:
+    path: /
+    methods: GET
+    defaults: { _controller: PCBuildMainBundle:Build:index }
+
+build_new:
+    path: build/new
+    methods: [ GET, POST ]
+    defaults: { _controller: PCBuildMainBundle:Build:new }
+
+build_show:
+    path: build/{id}
+    methods: GET
+    defaults: { _controller: PCBuildMainBundle:Build:show }
+
+build_edit:
+    path: build/{id}/edit
+    methods: [ GET, POST, DELETE ]
+    defaults: { _controller: PCBuildMainBundle:Build:edit }
+
+build_delete:
+    path: build/{id}
+    methods: DELETE
+    defaults: { _controller: PCBuildMainBundle:Build:delete }
+
+component_index:
+    path: components/
+    methods: GET
+    defaults: { _controller: PCBuildMainBundle:Component:index }
+
+component_new:
+    path: component/new
+    methods: [ GET, POST ]
+    defaults: { _controller: PCBuildMainBundle:Component:new }
+
+component_show:
+    path: component/{id}
+    methods: GET
+    defaults: { _controller: PCBuildMainBundle:Component:show }
+
+component_edit:
+    path: component/{id}/edit
+    methods: [ GET, POST, DELETE ]
+    defaults: { _controller: PCBuildMainBundle:Component:edit }
+
+component_delete:
+    path: component/{id}
+    methods: DELETE
+    defaults: { _controller: PCBuildMainBundle:Component:delete }
