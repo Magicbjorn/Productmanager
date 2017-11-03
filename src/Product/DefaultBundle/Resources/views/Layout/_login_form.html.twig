@@ -33,7 +33,7 @@
                 <input class="form-control" placeholder="Username" id="fos_user_registration_form_username" maxlength="180" name="fos_user_registration_form[username]" pattern=".{2,}" required="required" type="text"/>
                 <input class="form-control" placeholder="Password" id="fos_user_registration_form_plainPassword_first" name="fos_user_registration_form[plainPassword][first]" required="required" type="password"/>
                 <input class="form-control" placeholder="password Repeat" id="fos_user_registration_form_plainPassword_second" name="fos_user_registration_form[plainPassword][second]" required="required" type="password"/>
-                {{ form_widget(form._token) }}
+                {{ form_widget(login_registration_form._token) }}
                 <input class="form-control btn btn-primary" type="submit" value="Register">
                 </input>
                 <h5>

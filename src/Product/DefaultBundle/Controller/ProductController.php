@@ -10,6 +10,13 @@ class ProductController extends Controller
 {
     private $showClearFilter = false;
 
+    public function CreateLoginForm()
+    {
+        $formFactory = $this->container->get('fos_user.registration.form.factory');
+        $form        = $formFactory->createForm();
+        return $form->createView();
+    }
+
     public function indexAction(Request $request)
     {
         $filter     = null;
@@ -41,15 +48,12 @@ class ProductController extends Controller
             $noproducts = true;
         }
 
-        $formFactory = $this->container->get('fos_user.registration.form.factory');
-        $form = $formFactory->createForm();
-
         return $this->render('ProductDefaultBundle:Product:index.html.twig', array(
-            'products'        => $result,
-            'showClearFilter' => $this->showClearFilter,
-            'filter'          => $filter,
-            'noproducts'      => $noproducts,
-            'form'            => $form->createView(),
+            'products'                => $result,
+            'showClearFilter'         => $this->showClearFilter,
+            'filter'                  => $filter,
+            'noproducts'              => $noproducts,
+            'login_registration_form' => $this->CreateLoginForm(),
         ));
     }
 
@@ -68,8 +72,9 @@ class ProductController extends Controller
         }
 
         return $this->render('ProductDefaultBundle:Product:new.html.twig', array(
-            'product' => $product,
-            'form'    => $form->createView(),
+            'product'                 => $product,
+            'form'                    => $form->createView(),
+            'login_registration_form' => $this->CreateLoginForm(),
         ));
     }
 
@@ -78,8 +83,9 @@ class ProductController extends Controller
         $deleteForm = $this->createDeleteForm($product);
 
         return $this->render('ProductDefaultBundle:Product:show.html.twig', array(
-            'product'     => $product,
-            'delete_form' => $deleteForm->createView(),
+            'product'                 => $product,
+            'delete_form'             => $deleteForm->createView(),
+            'login_registration_form' => $this->CreateLoginForm(),
         ));
     }
 
@@ -96,9 +102,10 @@ class ProductController extends Controller
         }
 
         return $this->render('ProductDefaultBundle:Product:edit.html.twig', array(
-            'product'     => $product,
-            'edit_form'   => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
+            'product'                 => $product,
+            'edit_form'               => $editForm->createView(),
+            'delete_form'             => $deleteForm->createView(),
+            'login_registration_form' => $this->CreateLoginForm(),
         ));
     }
 

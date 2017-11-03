@@ -14,13 +14,12 @@
     </form>
 </div>
 <header class="header">
-    <!-- <img class="logo-icon" src="{{ asset('images/aquanote-logo.png') }}"> -->
     <h1 class="logo">
         Productmanagement
     </h1>
     <ul class="navi">
         {% block login %}
-            {{ include('ProductDefaultBundle:Product:_login_form.html.twig') }}
+            {{ include('ProductDefaultBundle:Layout:_login_form.html.twig') }}
         {% endblock %}
     </ul>
 </header>
