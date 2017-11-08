@@ -152,5 +152,66 @@ tr:nth-child(even) {
 }
 
 .logo {
+    margin: auto;
+    font-size: 35px;
+    color: black;
+}
+
+.logo:hover {
+    text-decoration: none;
+    color: white;
+}
+
+.component-selector {
+    max-height: 300px;
+    overflow: auto;
+}
+
+.red-warning-text {
+    color: red;
+}
+
+.entity-toggle {
+    margin:auto;
+}
+
+.entity-text-selected {
+    margin: auto;
+    margin-right: 5px;
+    margin-left: 5px;
+    border-width: 1px;
+    border-color: #2e6da4;
+    border-style: solid;
+    background-color: #337ab7;
+    border-radius: 5px;
+    color: white;
+}
+
+.entity-text-notselected {
+    margin: auto;
+    margin-right: 5px;
+    margin-left: 5px;
+    border-width: 1px;
+    border-color: #2e6da4;
+    border-style: solid;
+    background-color: #dfdfdf;
+    border-radius: 5px;
+}
+
+.dashboard-buttons {
+    text-align: center;
+    vertical-align: middle
+}
+
+.btn-dashboard {
+    width: 300px;
+    height: 150px;
     margin: 15px;
+    font-size: 40px;
+}
+
+.header-switch {
+    display: table;
+    margin: auto;
+    margin-bottom: 5px;
 }

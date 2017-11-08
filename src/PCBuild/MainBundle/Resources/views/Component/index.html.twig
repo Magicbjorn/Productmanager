@@ -1,43 +1,99 @@
-{% extends 'base.html.twig' %}
+{% extends 'PCBuildMainBundle:Base:_layout.html.twig' %}
 
-{% block body %}
-    <h1>Components list</h1>
-
+{% block bodycontent %}
+<h2 id="componenttitle" class="title-align-horizontal">
+    All Components
+</h2>
+<div class="row button-align-horizontal">
+    <a class="btn btn-primary btn-primary-modified" href="{{ path('component_new') }}" style="margin-bottom: 5px;">
+        Create a new component
+    </a>
+</div>
+<div>
+    <form action="{{ path('component_index') }}" class="form-align-horizontal" id="frmSearch" method="get">
+        <div class="input-group margin-input-group">
+            <input class="form-control" id="searchinput" name="filter" placeholder="Search for..." type="search">
+                <span class="glyphicon glyphicon-remove-circle" id="searchclear">
+                </span>
+                <span class="input-group-btn">
+                    <button class="btn btn-secondary btn-secondary-modified" type="submit">
+                        Go!
+                    </button>
+                </span>
+            </input>
+        </div>
+    </form>
+</div>
+{% if showClearFilter %}
+<div class="row button-align-horizontal" style="margin-bottom: 5px;">
+    <h5 style="float: left; margin-right: 15px">
+        Searching for: {{filter}}
+    </h5>
+    <a class="btn btn-secondary btn-secondary-modified" href="{{ path('component_index') }}" type="submit">
+        x Clear Filter
+    </a>
+</div>
+{% endif %}
+<div class="row">
+    {% if nocomponents %}
+    {{ include('PCBuildMainBundle:Base:_nothing_found.html.twig') }}
+    {% else %}
     <table>
         <thead>
             <tr>
-                <th>Id</th>
-                <th>Title</th>
-                <th>Description</th>
-                <th>Createdat</th>
-                <th>Actions</th>
+                <th>
+                    {{ knp_pagination_sortable(components, 'Title', 'component.title') }}
+                </th>
+                <th>
+                    {{ knp_pagination_sortable(components, 'Price', 'component.price') }}
+                </th>
+                <th>
+                    {{ knp_pagination_sortable(components, 'Description', 'component.description') }}
+                </th>
+                <th>
+                    {{ knp_pagination_sortable(components, 'Last Updated At', 'component.updated_at') }}
+                </th>
+                <th>
+                    {{ knp_pagination_sortable(components, 'Last Updated By', 'component.updated_by') }}
+                </th>
+                <th style="width: 200px">
+                    Actions
+                </th>
             </tr>
         </thead>
         <tbody>
-        {% for component in components %}
+            {% for component in components %}
             <tr>
-                <td><a href="{{ path('component_show', { 'id': component.id }) }}">{{ component.id }}</a></td>
-                <td>{{ component.title }}</td>
-                <td>{{ component.description }}</td>
-                <td>{% if component.createdat %}{{ component.createdat|date('Y-m-d H:i:s') }}{% endif %}</td>
                 <td>
-                    <ul>
-                        <li>
-                            <a href="{{ path('component_show', { 'id': component.id }) }}">show</a>
-                        </li>
-                        <li>
-                            <a href="{{ path('component_edit', { 'id': component.id }) }}">edit</a>
-                        </li>
-                    </ul>
+                    {{ component.title }}
+                </td>
+                <td>
+                    €{{ component.price }}
+                </td>
+                <td>
+                    {{ component.description }}
+                </td>
+                <td>
+                    {{ component.created_at|date('d-m-Y H:i:s') }}
+                </td>
+                <td>
+                    {{ component.created_by }}
+                </td>
+                <td>
+                    <a class="btn btn-primary btn-primary-modified btn-margin" href="{{ path('component_show', { 'id': component.id }) }}">
+                        Show
+                    </a>
+                    <a class="btn btn-primary btn-primary-modified btn-margin" href="{{ path('component_edit', { 'id': component.id }) }}">
+                        Edit
+                    </a>
                 </td>
             </tr>
-        {% endfor %}
+            {% endfor %}
         </tbody>
     </table>
-
-    <ul>
-        <li>
-            <a href="{{ path('component_new') }}">Create a new component</a>
-        </li>
-    </ul>
+    {% endif %}
+</div>
+<div class="navigation text-center">
+    {{ knp_pagination_render(components) }}
+</div>
 {% endblock %}

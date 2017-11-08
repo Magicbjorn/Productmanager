@@ -1,16 +1,16 @@
-{% extends 'base.html.twig' %}
+{% extends 'PCBuildMainBundle:Base:_layout.html.twig' %}
 
-{% block body %}
-    <h1>Component creation</h1>
-
+{% block bodycontent %}
+<h2 class="title-align-horizontal">
+    Component creation
+</h2>
+<a class="btn btn-primary btn-primary-modified btn-margin" href="{{ path('component_index') }}" style="position: fixed;">
+    < Back to the list
+</a>
+<div class="form-align-horizontal">
     {{ form_start(form) }}
         {{ form_widget(form) }}
-        <input type="submit" value="Create" />
+    <input class="btn btn-primary btn-primary-modified" type="submit" value="Create"/>
     {{ form_end(form) }}
-
-    <ul>
-        <li>
-            <a href="{{ path('component_index') }}">Back to the list</a>
-        </li>
-    </ul>
+</div>
 {% endblock %}

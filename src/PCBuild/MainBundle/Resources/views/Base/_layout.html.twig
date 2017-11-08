@@ -3,19 +3,36 @@
 {% block stylesheets %}
 <link href="{{ asset('vendor/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet"/>
 <link href="{{ asset('css/_hamburger.css') }}" rel="stylesheet"/>
+<link href="{{ asset('css/_switch.css') }}" rel="stylesheet"/>
 <link href="{{ asset('css/global.css') }}" rel="stylesheet"/>
 <link href="{{ asset('css/layout.css') }}" rel="stylesheet"/>
 <link href="{{ asset('vendor/fontawesome/css/font-awesome.min.css') }}" rel="stylesheet"/>
+<script src="{{ asset('bundles/fosjsrouting/js/router.js') }}"></script>
+<script src="{{ path('fos_js_routing_js', { callback: 'fos.Router.setData' }) }}"></script>
 {% endblock %}
 {% block body %}
 <header class="header">
-    {{ include('PCBuildMainBundle:Layout:_hamburger.html.twig') }}
-    <h1 class="logo">
+    {{ include('PCBuildMainBundle:Base:_hamburger.html.twig') }}
+    <a href="{{ path('index') }}" class="logo">
         PCBuilder Xtreme
-    </h1>
+    </a>
+    <!-- <div class="entity-toggle">
+        <h2 class="entity-text-selected" id="txtbuilds" style="float: left;">
+            Builds
+        </h2>
+        <label class="switch">
+            <input id="entityselector" type="checkbox">
+                <span class="slider round">
+                </span>
+            </input>
+        </label>
+        <h2 class="entity-text-notselected" id="txtcomponents" style="float: right;">
+            Components
+        </h2>
+    </div> -->
     <ul class="navi">
         {% block login %}
-            {{ include('PCBuildMainBundle:Layout:_login_form.html.twig') }}
+            {{ include('PCBuildMainBundle:Base:_login_form.html.twig') }}
         {% endblock %}
     </ul>
 </header>

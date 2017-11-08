@@ -1,21 +1,26 @@
-{% extends 'base.html.twig' %}
+{% extends 'PCBuildMainBundle:Base:_layout.html.twig' %}
 
-{% block body %}
-    <h1>Component edit</h1>
-
+{% block bodycontent %}
+<h1 class="title-align-horizontal">
+    Component edit
+</h1>
+<a class="btn btn-primary btn-primary-modified btn-margin" href="{{ path('component_index') }}" style="position: fixed;">
+    < Back to the list
+</a>
+<div class="form-align-horizontal">
     {{ form_start(edit_form) }}
         {{ form_widget(edit_form) }}
-        <input type="submit" value="Edit" />
-    {{ form_end(edit_form) }}
-
-    <ul>
-        <li>
-            <a href="{{ path('component_index') }}">Back to the list</a>
-        </li>
-        <li>
+    <div class="row">
+        <div class="col-sm-6">
+            <input class="btn btn-primary btn-primary-modified" type="submit" value="Save Component"/>
+            {{ form_end(edit_form) }}
+        </div>
+        <div class="col-sm-6">
             {{ form_start(delete_form) }}
-                <input type="submit" value="Delete">
-            {{ form_end(delete_form) }}
-        </li>
-    </ul>
+            <input class="btn btn-danger btn-danger-modified btn-align-right" type="submit" value="Delete Component">
+                {{ form_end(delete_form) }}
+            </input>
+        </div>
+    </div>
+</div>
 {% endblock %}

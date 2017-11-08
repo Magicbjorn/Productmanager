@@ -1,8 +1,8 @@
-{% extends 'PCBuildMainBundle:Layout:_layout.html.twig' %}
+{% extends 'PCBuildMainBundle:Base:_layout.html.twig' %}
 
 {% block bodycontent %}
 <h1 class="title-align-horizontal">
-    Product Details
+    Build Details
 </h1>
 <a class="btn btn-primary btn-primary-modified btn-margin" href="{{ path('build_index') }}" style="position: fixed;">
     < Back to the list
@@ -10,14 +10,6 @@
 <div class="row">
     <table>
         <tbody>
-            <tr>
-                <th>
-                    Id
-                </th>
-                <td>
-                    {{ build.id }}
-                </td>
-            </tr>
             <tr>
                 <th>
                     Title
@@ -31,7 +23,7 @@
                     Price
                 </th>
                 <td>
-                    {{ build.price }}
+                    {{ build.totalprice }}
                 </td>
             </tr>
             <tr>
@@ -40,6 +32,32 @@
                 </th>
                 <td>
                     {{ build.description }}
+                </td>
+            </tr>
+            <tr>
+                <th>
+                    Last Updated At
+                </th>
+                <td>
+                    {{ build.updated_at|date('d-m-Y H:i:s') }}
+                </td>
+            </tr>
+            <tr>
+                <th>
+                    Last Updated By
+                </th>
+                <td>
+                    {{ build.updated_by }}
+                </td>
+            </tr>
+            <tr>
+                <th>
+                    Components
+                </th>
+                <td>
+                    {% for component in build.components %}
+                        {{ component.title }}<br>
+                    {% endfor %}
                 </td>
             </tr>
             <tr>

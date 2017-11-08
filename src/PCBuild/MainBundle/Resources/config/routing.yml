@@ -1,6 +1,10 @@
 #used when referencing this file as external routing
+index:
+    path: index/
+    defaults: { _controller: PCBuildMainBundle:Base:index }
+
 build_index:
-    path: /
+    path: builds/
     methods: GET
     defaults: { _controller: PCBuildMainBundle:Build:index }
 

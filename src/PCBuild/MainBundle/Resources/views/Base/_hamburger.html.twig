@@ -19,8 +19,8 @@
         <ul>
             <ul>
                 <li>
-                    <a class="centertext menuAText" href="{{ path('build_index') }}" id="other">
-                        Home
+                    <a class="centertext menuAText" href="{{ path('index') }}" id="other">
+                        Dashboard
                     </a>
                 </li>
             </ul>
@@ -29,10 +29,10 @@
             </h3>
             <ul>
                 <li>
-                    <a class="centertext menuAText" href="#" id="projects">
+                    <a class="centertext menuAText" href="#" id="menu-builds">
                         Builds
                     </a>
-                    <div class="panel-collapse collapse" id="projectsCollapsible">
+                    <div class="panel-collapse collapse" id="buildsCollapsible">
                         <h5 class="menuSubHeader">
                             Management
                         </h5>
@@ -63,10 +63,10 @@
                     </div>
                 </li>
                 <li>
-                    <a class="centertext menuAText" href="#" id="quarantines">
+                    <a class="centertext menuAText" href="#" id="menu-components">
                         Components
                     </a>
-                    <div class="panel-collapse collapse" id="quarantineCollapsible">
+                    <div class="panel-collapse collapse" id="componentsCollapsible">
                         <h5 class="menuSubHeader">
                             Management
                         </h5>
@@ -79,7 +79,7 @@
                             </li>
                             <li>
                                 <a class="centertext menuBText" href="{{ path('component_index') }}" id="other">
-                                    View Your Components
+                                    View All Components
                                 </a>
                             </li>
                         </ul>
@@ -91,8 +91,8 @@
             </h3>
             <ul>
                 <li>
-                    <a class="centertext menuAText" href="#" id="settings">
-                        Management
+                    <a class="centertext menuAText" href="#" id="menu-settings">
+                        Settings
                     </a>
                     <div class="panel-collapse collapse" id="settingsCollapsible">
                         <h5 class="menuSubHeader">

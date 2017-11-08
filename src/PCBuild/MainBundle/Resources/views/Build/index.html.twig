@@ -1,4 +1,4 @@
-{% extends 'PCBuildMainBundle:Layout:_layout.html.twig' %}
+{% extends 'PCBuildMainBundle:Base:_layout.html.twig' %}
 
 {% block bodycontent %}
 <h2 class="title-align-horizontal">
@@ -36,12 +36,7 @@
 {% endif %}
 <div class="row">
     {% if nobuilds %}
-    <h1 class="title-text">
-        Nobody, but us chickens
-    </h1>
-    <h1 class="title-text">
-        :(
-    </h1>
+    {{ include('PCBuildMainBundle:Base:_nothing_found.html.twig') }}
     {% else %}
     <table>
         <thead>
@@ -50,13 +45,16 @@
                     {{ knp_pagination_sortable(builds, 'Title', 'builds.title') }}
                 </th>
                 <th>
-                    {{ knp_pagination_sortable(builds, 'Price', 'builds.price') }}
+                    {{ knp_pagination_sortable(builds, 'Price', 'builds.totalprice') }}
                 </th>
                 <th>
                     {{ knp_pagination_sortable(builds, 'Description', 'builds.description') }}
                 </th>
                 <th>
-                    {{ knp_pagination_sortable(builds, 'Created At', 'builds.created_at') }}
+                    {{ knp_pagination_sortable(builds, 'Last Updated At', 'builds.updated_at') }}
+                </th>
+                <th>
+                    {{ knp_pagination_sortable(builds, 'Last Updated By', 'builds.updated_by') }}
                 </th>
                 <th style="width: 200px">
                     Actions
@@ -70,13 +68,16 @@
                     {{ build.title }}
                 </td>
                 <td>
-                    {{ build.price }}
+                    €{{ build.totalprice }}
                 </td>
                 <td>
                     {{ build.description }}
                 </td>
                 <td>
-                    {{ build.created_at|date('d-m-Y H:i:s') }}
+                    {{ build.updated_at|date('d-m-Y H:i:s') }}
+                </td>
+                <td>
+                    {{ build.updated_by }}
                 </td>
                 <td>
                     <a class="btn btn-primary btn-primary-modified btn-margin" href="{{ path('build_show', { 'id': build.id }) }}">

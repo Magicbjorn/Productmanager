@@ -1,5 +1,15 @@
 + function($) {
     $(document).ready(function() {
+        var url = location.href;
+        var urlarray = url.split('/');
+        var urlpart = urlarray[3];
+        // if (urlpart == "components" || urlpart == "component") {
+        //     //document.getElementById('entityselector').checked = true;
+        //     $('#txtcomponents').removeClass('entity-text-notselected');
+        //     $('#txtcomponents').addClass('entity-text-selected');
+        //     $('#txtbuilds').removeClass('entity-text-selected');
+        //     $('#txtbuilds').addClass('entity-text-notselected');
+        // }
         $('#searchclear').on('click', function() {
             $('#searchinput').val('');
         });
@@ -40,20 +50,13 @@
             $('#hiddenregister').slideToggle(500);
             $('#hiddenlogin').slideToggle(500);
         }
-        $('#projects').on('click', function() {
-            console.log("HIOOGOAGOAG");
-            $('#projectsCollapsible').slideToggle(500);
+        $('#menu-builds').on('click', function() {
+            $('#buildsCollapsible').slideToggle(500);
         });
-        $('#quarantines').on('click', function() {
-            $('#quarantineCollapsible').slideToggle(500);
+        $('#menu-components').on('click', function() {
+            $('#componentsCollapsible').slideToggle(500);
         });
-        $('#segments').on('click', function() {
-            $('#segmentsCollapsible').slideToggle(500);
-        });
-        $('#requirements').on('click', function() {
-            $('#requirementsCollapsible').slideToggle(500);
-        });
-        $('#settings').on('click', function() {
+        $('#menu-settings').on('click', function() {
             $('#settingsCollapsible').slideToggle(500);
         });
         $('#other').on('click', function() {
@@ -67,5 +70,32 @@
                 left: -$('.slideout-menu').width()
             }, 250);
         }
+        // $('#entityselector').on('click', function() {
+        //     if (document.getElementById('entityselector').checked) {
+        //         $('#txtcomponents').removeClass('entity-text-notselected');
+        //         $('#txtcomponents').addClass('entity-text-selected');
+        //         $('#txtbuilds').removeClass('entity-text-selected');
+        //         $('#txtbuilds').addClass('entity-text-notselected');
+        //         var url = Routing.generate('component_index');
+        //         location.href = url;
+        //         entityswitchtoggled = true;
+        //     } else {
+        //         $('#txtcomponents').addClass('entity-text-notselected');
+        //         $('#txtcomponents').removeClass('entity-text-selected');
+        //         $('#txtbuilds').addClass('entity-text-selected');
+        //         $('#txtbuilds').removeClass('entity-text-notselected');
+        //         var url = Routing.generate('build_index');
+        //         location.href = url;
+        //         entityswitchtoggled = false;
+        //     }
+        // });
+        $('#builds').on('click', function() {
+            var url = Routing.generate('build_index');
+            location.href = url;
+        });
+        $('#components').on('click', function() {
+            var url = Routing.generate('component_index');
+            location.href = url;
+        });
     });
 }(jQuery);

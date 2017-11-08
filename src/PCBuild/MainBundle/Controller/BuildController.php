@@ -10,6 +10,7 @@ class BuildController extends Controller
 {
     private $showClearFilter = false;
 
+    private $usr      = null;
     private $username = null;
 
     public function CreateLoginForm()
@@ -21,10 +22,11 @@ class BuildController extends Controller
 
     public function indexAction(Request $request)
     {
-        $username = $this->get('security.token_storage')->getToken()->getUser();
-        
-        if ($username != "anon.") {
-            $username = $username->getUsername(0);
+        $usr      = $this->get('security.token_storage')->getToken()->getUser();
+        $username = "";
+
+        if ($usr != "anon.") {
+            $username = $usr->getUsername(0);
         }
 
         $filter   = null;
@@ -40,8 +42,8 @@ class BuildController extends Controller
             $filter                = $request->query->getAlnum('filter');
             $this->showClearFilter = true;
 
-            $queryBuilder->where('builds.name LIKE :name')
-                ->setParameter('name', '%' . $filter . '%');
+            $queryBuilder->where('builds.title LIKE :title')
+                ->setParameter('title', '%' . $filter . '%');
         } else {
             $this->showClearFilter = false;
         }
@@ -65,36 +67,64 @@ class BuildController extends Controller
             'filter'                  => $filter,
             'nobuilds'                => $nobuilds,
             'login_registration_form' => $this->CreateLoginForm(),
+            'totalprice'              => 29.99,
         ));
     }
 
     public function newAction(Request $request)
     {
-        $build = new Build();
-        $form  = $this->createForm('PCBuild\MainBundle\Form\BuildType', $build);
-        $form->handleRequest($request);
+        $nocomponents = false;
+        $em           = $this->getDoctrine()->getManager();
+        $components   = $em->getRepository('PCBuildMainBundle:Component')->findAll();
 
-        $build->setCreated_at(time());
+        if ($components == []) {
+            $nocomponents = true;
+        } else {
+            $build = new Build();
+            $form  = $this->createForm('PCBuild\MainBundle\Form\BuildType', $build);
+            $form->handleRequest($request);
 
-        $usr = $this->getUser();
-        $build->setCreated_by($usr->getUsername());
+            $usr = $this->getUser();
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($build);
+            if ($usr == null) {
+                return $this->redirectToRoute('build_index');
+            } else {
+                if ($form->isSubmitted() && $form->isValid()) {
+                    $em->persist($build);
 
-            $build->setCreated_at = explode(" ", microtime())[1];
-            $build->setCreated_by = $this->username;
+                    $totalprice = 0.00;
 
-            $em->flush();
+                    foreach ($_POST['componentsselected'] as $componentid) {
+                        $component = $em->find('PCBuildMainBundle:Component', $componentid);
 
-            return $this->redirectToRoute('build_show', array('id' => $build->getId()));
+                        $totalprice += $component->getPrice();
+
+                        $build->addComponent($component);
+                    }
+
+                    $build->setTotalprice($totalprice);
+                    $build->setCreated_at(new \DateTime('now'));
+                    $build->setUpdated_at(new \DateTime('now'));
+                    $build->setCreated_by($usr->getUsername());
+                    $build->setUpdated_by($usr->getUsername());
+
+                    $em->flush();
+
+                    return $this->redirectToRoute('build_show', array('id' => $build->getId()));
+                }
+            }
+
+            return $this->render('PCBuildMainBundle:Build:new.html.twig', array(
+                'build'                   => $build,
+                'form'                    => $form->createView(),
+                'login_registration_form' => $this->CreateLoginForm(),
+                'components'              => $components,
+                'nocomponents'            => $nocomponents,
+            ));
         }
 
         return $this->render('PCBuildMainBundle:Build:new.html.twig', array(
-            'build'                   => $build,
-            'form'                    => $form->createView(),
-            'login_registration_form' => $this->CreateLoginForm(),
+            'nocomponents' => $nocomponents,
         ));
     }
 
@@ -111,14 +141,54 @@ class BuildController extends Controller
 
     public function editAction(Request $request, Build $build)
     {
+        $em = $this->getDoctrine()->getManager();
+
         $deleteForm = $this->createDeleteForm($build);
         $editForm   = $this->createForm('PCBuild\MainBundle\Form\BuildType', $build);
         $editForm->handleRequest($request);
 
         if ($editForm->isSubmitted() && $editForm->isValid()) {
-            $this->getDoctrine()->getManager()->flush();
+            $totalprice = $build->getTotalprice();
+
+            if (isset($_POST['deleteselected'])) {
+                foreach ($_POST['deleteselected'] as $componentid) {
+                    $component = $em->find('PCBuildMainBundle:Component', $componentid);
+
+                    $totalprice -= $component->getPrice();
+
+                    $build->removeComponent($component);
+                }
+            }
+
+            if (isset($_POST['addselected'])) {
+                foreach ($_POST['addselected'] as $componentid) {
+                    $component = $em->find('PCBuildMainBundle:Component', $componentid);
+
+                    $totalprice += $component->getPrice();
+
+                    $build->addComponent($component);
+                }
+            }
+
+            $build->setTotalprice($totalprice);
+
+            $build->setUpdated_at(new \DateTime('now'));
+            $build->setUpdated_by($this->GetUserName());
+
+            $em->flush();
 
             return $this->redirectToRoute('build_show', array('id' => $build->getId()));
+        }
+
+        $componentsstore = $em->getRepository('PCBuildMainBundle:Component')->findAll();
+        $components      = array();
+
+        dump($build);
+        foreach ($componentsstore as $component) {
+            dump(array($build->getComponents()));
+            if (!$build->getComponents()->contains($component)) {
+                array_push($components, $component);
+            }
         }
 
         return $this->render('PCBuildMainBundle:Build:edit.html.twig', array(
@@ -126,6 +196,7 @@ class BuildController extends Controller
             'edit_form'               => $editForm->createView(),
             'delete_form'             => $deleteForm->createView(),
             'login_registration_form' => $this->CreateLoginForm(),
+            'components'              => $components,
         ));
     }
 
@@ -141,6 +212,18 @@ class BuildController extends Controller
         }
 
         return $this->redirectToRoute('build_index');
+    }
+
+    public function GetUserName()
+    {
+        $user     = $this->get('security.token_storage')->getToken()->getUser();
+        $username = $user;
+
+        if ($username != "anon.") {
+            $username = $user->getUsername(0);
+        }
+
+        return $username;
     }
 
     /**

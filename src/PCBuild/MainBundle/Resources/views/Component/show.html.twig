@@ -1,40 +1,93 @@
-{% extends 'base.html.twig' %}
+{% extends 'PCBuildMainBundle:Base:_layout.html.twig' %}
 
-{% block body %}
-    <h1>Component</h1>
-
+{% block bodycontent %}
+<h1 class="title-align-horizontal">
+    Component Details
+</h1>
+<a class="btn btn-primary btn-primary-modified btn-margin" href="{{ path('component_index') }}" style="position: fixed;">
+    < Back to the list
+</a>
+<div class="row">
     <table>
         <tbody>
             <tr>
-                <th>Id</th>
-                <td>{{ component.id }}</td>
+                <th>
+                    Id
+                </th>
+                <td>
+                    {{ component.id }}
+                </td>
             </tr>
             <tr>
-                <th>Title</th>
-                <td>{{ component.title }}</td>
+                <th>
+                    Title
+                </th>
+                <td>
+                    {{ component.title }}
+                </td>
             </tr>
             <tr>
-                <th>Description</th>
-                <td>{{ component.description }}</td>
+                <th>
+                    Price
+                </th>
+                <td>
+                    €{{ component.price }}
+                </td>
             </tr>
             <tr>
-                <th>Createdat</th>
-                <td>{% if component.createdat %}{{ component.createdat|date('Y-m-d H:i:s') }}{% endif %}</td>
+                <th>
+                    Description
+                </th>
+                <td>
+                    {{ component.description }}
+                </td>
+            </tr>
+            <tr>
+                <th>
+                    Created By
+                </th>
+                <td>
+                    {{ component.created_by }}
+                </td>
+            </tr>
+            <tr>
+                <th>
+                    Created At
+                </th>
+                <td>
+                    {{ component.created_at.date|date('d-m-Y H:i:s') }}
+                </td>
+            </tr>
+            <tr>
+                <th>
+                    Updated By
+                </th>
+                <td>
+                    {{ component.updated_by }}
+                </td>
+            </tr>
+            <tr>
+                <th>
+                    Updated At
+                </th>
+                <td>
+                    {{ component.updated_at.date|date('d-m-Y H:i:s') }}
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <a class="btn btn-primary btn-primary-modified btn-margin" href="{{ path('component_edit', { 'id': component.id }) }}">
+                        Edit
+                    </a>
+                </td>
+                <td>
+                    {{ form_start(delete_form) }}
+                    <input class="btn btn-danger btn-danger-modified btn-margin" type="submit" value="Delete">
+                        {{ form_end(delete_form) }}
+                    </input>
+                </td>
             </tr>
         </tbody>
     </table>
-
-    <ul>
-        <li>
-            <a href="{{ path('component_index') }}">Back to the list</a>
-        </li>
-        <li>
-            <a href="{{ path('component_edit', { 'id': component.id }) }}">Edit</a>
-        </li>
-        <li>
-            {{ form_start(delete_form) }}
-                <input type="submit" value="Delete">
-            {{ form_end(delete_form) }}
-        </li>
-    </ul>
+</div>
 {% endblock %}

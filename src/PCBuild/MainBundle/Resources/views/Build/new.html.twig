@@ -1,16 +1,33 @@
-{% extends 'PCBuildMainBundle:Layout:_layout.html.twig' %}
+{% extends 'PCBuildMainBundle:Base:_layout.html.twig' %}
 
 {% block bodycontent %}
-<h1 class="title-align-horizontal">
+<h2 class="title-align-horizontal">
     Product creation
-</h1>
+</h2>
 <a class="btn btn-primary btn-primary-modified btn-margin" href="{{ path('build_index') }}" style="position: fixed;">
     < Back to the list
 </a>
+{% if nocomponents %}
+<h4 class="title-text red-warning-text">
+    **Create a Component first, before creating a Build.**
+</h4>
+{% else %}
 <div class="form-align-horizontal">
     {{ form_start(form) }}
         {{ form_widget(form) }}
+    <div class="form-group component-selector">
+        <label class="control-label required" for="pcbuild_mainbundle_build_title">
+            Components
+        </label>
+        <br/>
+        {% for component in components %}
+        <input name="componentsselected[]" type="checkbox" value="{{ component.id }}"/>
+        {{ component.title }}
+        <br/>
+        {% endfor %}
+    </div>
     <input class="btn btn-primary btn-primary-modified" type="submit" value="Create"/>
     {{ form_end(form) }}
 </div>
+{% endif %}
 {% endblock %}

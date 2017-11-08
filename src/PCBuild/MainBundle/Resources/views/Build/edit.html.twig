@@ -1,4 +1,4 @@
-{% extends 'PCBuildMainBundle:Layout:_layout.html.twig' %}
+{% extends 'PCBuildMainBundle:Base:_layout.html.twig' %}
 
 {% block bodycontent %}
 <h1 class="title-align-horizontal">
@@ -10,14 +10,36 @@
 <div class="form-align-horizontal">
     {{ form_start(edit_form) }}
         {{ form_widget(edit_form) }}
+    <div class="form-group component-selector">
+        <label class="control-label required" for="pcbuild_mainbundle_build_title">
+            Delete Components
+        </label>
+        <br/>
+        {% for component in build.components %}
+        <input name="deleteselected[]" type="checkbox" value="{{ component.id }}"/>
+        {{ component.title }}
+        <br/>
+        {% endfor %}
+    </div>
+    <div class="form-group component-selector">
+        <label class="control-label required" for="pcbuild_mainbundle_build_title">
+            Add Components
+        </label>
+        <br/>
+        {% for component in components %}
+        <input name="addselected[]" type="checkbox" value="{{ component.id }}"/>
+        {{ component.title }}
+        <br/>
+        {% endfor %}
+    </div>
     <div class="row">
         <div class="col-sm-6">
-            <input class="btn btn-primary btn-primary-modified" type="submit" value="Save Product"/>
+            <input class="btn btn-primary btn-primary-modified" type="submit" value="Save Build"/>
             {{ form_end(edit_form) }}
         </div>
         <div class="col-sm-6">
             {{ form_start(delete_form) }}
-            <input class="btn btn-danger btn-danger-modified btn-align-right" type="submit" value="Delete Product">
+            <input class="btn btn-danger btn-danger-modified btn-align-right" type="submit" value="Delete Build">
                 {{ form_end(delete_form) }}
             </input>
         </div>
