@@ -167,7 +167,7 @@ class ComponentController extends Controller
                 $totalprice = $build->getTotalprice();
                 $totalprice -= $component->getPrice();
                 $build->setTotalprice($totalprice);
-                
+
                 $em->flush();
             }
 
